@@ -2,7 +2,7 @@
 
 A collaborative, git-backed library for storing and version-controlling CAD models, STEP files, and associated source scripts.
 
-🌐 **[Explore the Vault](https://<your-username>.github.io/OpenPartVault)**
+🌐 **[Explore the Vault](https://jdegenstein.github.io/OpenPartVault)**
 
 ## 📂 How It Works
 
