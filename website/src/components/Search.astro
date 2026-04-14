@@ -41,9 +41,9 @@
   const tagCloud = document.getElementById('tag-cloud');
 
   async function init() {
-    // 1. Fetch the data using the base URL
     const baseUrl = import.meta.env.BASE_URL;
-    const response = await fetch(`${baseUrl}models.json`);
+    // Add the explicit slash here
+    const response = await fetch(`${baseUrl}/models.json`);
     models = await response.json();
 
     // 2. Setup Fuse.js
@@ -98,8 +98,8 @@
   function renderGrid(items) {
     const baseUrl = import.meta.env.BASE_URL;
     grid.innerHTML = items.map(item => `
-      <a href="${baseUrl}parts/${item.slug}" class="model-card">
-        <img src="${baseUrl}parts/${item.slug}/thumbnail.png" alt="${item.title}" loading="lazy" />
+      <a href="${baseUrl}/parts/${item.slug}" class="model-card">
+        <img src="${baseUrl}/parts/${item.slug}/thumbnail.png" alt="${item.title}" loading="lazy" />
         <div class="card-info">
           <h3>${item.title}</h3>
           <p>By ${item.author}</p>
