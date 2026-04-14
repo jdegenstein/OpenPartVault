@@ -1,0 +1,9 @@
+title: "Simple Boat"
+author: "jdegenstein"
+date_added: "2026-04-14"
+version: "1.0.0"
+license: "MIT"
+tags:
+  - boat
+  - toy
+cad_software: "build123d"

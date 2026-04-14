@@ -1,0 +1,10 @@
+title: "Template Part Name"
+author: "Your GitHub Username"
+date_added: "YYYY-MM-DD"
+version: "1.0.0"
+license: "MIT" # e.g., MIT, CC-BY-4.0, CC0
+tags:
+  - mechanical
+  - fastener
+  - metric
+cad_software: "build123d" # What was used to create this?

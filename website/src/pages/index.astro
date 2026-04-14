@@ -1,0 +1,26 @@
+---
+import Search from '../components/Search.astro';
+import '../styles/global.css';
+---
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <title>OpenPartVault</title>
+  </head>
+  <body>
+    <main style="max-width: 1200px; margin: 0 auto; padding: 2rem;">
+      <div class="header-row">
+        <div>
+          <h1 style="margin-bottom: 0.5rem;">📦 OpenPartVault</h1>
+          <p style="margin: 0; color: var(--text-muted);">A collaborative, git-backed library for CAD models and source files.</p>
+        </div>
+        <a href="https://github.com/jdegenstein/OpenPartVault" target="_blank" rel="noopener noreferrer" class="github-link">
+          View on GitHub
+        </a>
+      </div>
+      
+      <Search />
+    </main>
+  </body>
+</html>

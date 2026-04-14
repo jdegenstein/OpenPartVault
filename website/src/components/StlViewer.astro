@@ -1,0 +1,99 @@
+<div id="3d-container" data-stl-url={Astro.props.stlUrl} style="width: 100%; height: 400px;"></div>
+
+<script>
+  import * as THREE from 'three';
+  import { STLLoader } from 'three/examples/jsm/loaders/STLLoader.js';
+  import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
+
+  const container = document.getElementById('3d-container');
+  const stlUrl = container.dataset.stlUrl;
+
+  const scene = new THREE.Scene();
+  scene.background = new THREE.Color(0xf0f0f0);
+
+  // 1. Initialize an Orthographic Camera with temporary bounds
+  let aspect = container.clientWidth / container.clientHeight;
+  const camera = new THREE.OrthographicCamera(-aspect, aspect, 1, -1, 0.1, 1000);
+
+  // CRITICAL CAD FIX: Tell Three.js that Z is the vertical axis
+  camera.up.set(0, 0, 1);
+
+  const renderer = new THREE.WebGLRenderer({ antialias: true });
+  renderer.setSize(container.clientWidth, container.clientHeight);
+  container.appendChild(renderer.domElement);
+
+  const controls = new OrbitControls(camera, renderer.domElement);
+  controls.enableDamping = true; // Adds a smooth feeling to the camera rotation
+
+  // 2. Lighting Setup
+  scene.add(new THREE.HemisphereLight(0xffffff, 0x444444, 1.5));
+  const dirLight = new THREE.DirectionalLight(0xffffff, 0.8);
+  
+  // Adjusted for Z-up (X=100, Y=-100, Z=200)
+  dirLight.position.set(100, -100, 200); 
+  scene.add(dirLight);
+
+  // Variable to store the model's radius for the resize handler
+  let modelRadius = 1; 
+
+  // 3. Load and Center the STL
+  const loader = new STLLoader();
+  loader.load(stlUrl, function (geometry) {
+    const material = new THREE.MeshPhongMaterial({ color: 0x0055ff, specular: 0x111111, shininess: 200 });
+    const mesh = new THREE.Mesh(geometry, material);
+    
+    // Center the geometry mathematically
+    geometry.computeBoundingBox();
+    geometry.computeBoundingSphere();
+    
+    const center = new THREE.Vector3();
+    geometry.boundingBox.getCenter(center);
+    mesh.position.sub(center);
+    
+    modelRadius = geometry.boundingSphere.radius;
+    
+    // 4. Update Orthographic Frustum based on object size
+    // 3x radius gives comfortable padding around the part
+    const frustumSize = modelRadius * 2; 
+    
+    camera.left = -frustumSize * aspect / 2;
+    camera.right = frustumSize * aspect / 2;
+    camera.top = frustumSize / 2;
+    camera.bottom = -frustumSize / 2;
+    
+    // Using negative near clipping plane prevents parts from disappearing when rotating
+    camera.near = -modelRadius * 10; 
+    camera.far = modelRadius * 10;
+    camera.updateProjectionMatrix();
+    
+    // 5. Set True CAD Isometric Angle (X=1, Y=-1, Z=1)
+    camera.position.set(modelRadius, -modelRadius, modelRadius);
+    camera.lookAt(0, 0, 0);
+    
+    scene.add(mesh);
+  });
+
+  // 6. Animation Loop
+  function animate() {
+    requestAnimationFrame(animate);
+    controls.update(); // Required for damping
+    renderer.render(scene, camera);
+  }
+  animate();
+
+  // 7. Handle Window Resizing (Crucial for Orthographic cameras)
+  window.addEventListener('resize', () => {
+    const width = container.clientWidth;
+    const height = container.clientHeight;
+    renderer.setSize(width, height);
+    
+    aspect = width / height;
+    const frustumSize = modelRadius * 2;
+    
+    camera.left = -frustumSize * aspect / 2;
+    camera.right = frustumSize * aspect / 2;
+    camera.top = frustumSize / 2;
+    camera.bottom = -frustumSize / 2;
+    camera.updateProjectionMatrix();
+  });
+</script>

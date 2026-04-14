@@ -1,0 +1,35 @@
+# Web/Node (Website directory)
+website/node_modules/
+website/dist/
+website/.astro/
+npm-debug.log
+
+# Python (If you use scripts for CAD generation)
+__pycache__/
+*.py[cod]
+*$py.class
+.venv/
+venv/
+env/
+
+# OS/System
+.DS_Store
+Thumbs.db
+
+# Explicitly ALLOW CAD files (overrides any global ignores)
+!*.step
+!*.stp
+!*.stl
+!*.iges
+!*.igs
+
+# --- OpenPartVault Build Artifacts ---
+# Ignore the generated database and copied CAD files inside the website public folder
+website/public/models.json
+website/public/parts/
+
+# --- Editor / IDE Settings ---
+.vscode/
+.idea/
+*.swp
+*.swo
