@@ -12,3 +12,6 @@ These screws were generated using a programmatic CAD pipeline. If you need a non
 The included `generator.py` can be executed to create the STEP and STL:
 ```bash
 python generator.py
+
+## Alternate View
+![alternate view](alternate_view.png)
