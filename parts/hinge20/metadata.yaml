@@ -1,0 +1,14 @@
+title: "Template Part Name"
+author: "dmalawey"
+date_added: "2026-04-20"
+version: "1.0.0"
+license: "MIT" # e.g., MIT, CC-BY-4.0, CC0
+tags:
+  - mechanical
+  - fastener
+  - metric
+  - openlab
+  - 2020 extrusion
+  - hinge
+  - print-in-place
+cad_software: "SOLIDWORKS" # What was used to create this?
