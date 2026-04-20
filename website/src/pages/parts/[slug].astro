@@ -112,5 +112,75 @@ const { model, descriptionHtml } = Astro.props;
         <article set:html={descriptionHtml} />
       </section>
     </div>
+
+
+    <script>
+      // Wait for the DOM to fully load
+      document.addEventListener("DOMContentLoaded", () => {
+        // Find all code blocks inside the description section
+        const preElements = document.querySelectorAll('.description pre');
+
+        preElements.forEach((pre) => {
+          const codeElem = pre.querySelector('code');
+          if (!codeElem) return;
+
+          // Extract the language name from the class (e.g., "language-python")
+          let lang = 'TEXT';
+          codeElem.classList.forEach(cls => {
+            if (cls.startsWith('language-')) {
+              lang = cls.replace('language-', '');
+            }
+          });
+
+          // Create the outer wrapper
+          const wrapper = document.createElement('div');
+          wrapper.className = 'code-wrapper';
+          
+          // Insert wrapper just before the pre element, then move the pre inside it
+          pre.parentNode.insertBefore(wrapper, pre);
+          
+          // Create the header bar
+          const header = document.createElement('div');
+          header.className = 'code-header';
+          
+          // Add the language label
+          const langSpan = document.createElement('span');
+          langSpan.className = 'code-lang';
+          langSpan.innerText = lang;
+          
+          // Add the copy button
+          const copyBtn = document.createElement('button');
+          copyBtn.className = 'copy-btn';
+          copyBtn.innerText = 'Copy';
+          
+          // Attach copy functionality
+          copyBtn.addEventListener('click', async () => {
+            try {
+              // Write the text content of the code block to the clipboard
+              await navigator.clipboard.writeText(codeElem.innerText);
+              
+              // Visual feedback
+              copyBtn.innerText = 'Copied!';
+              copyBtn.classList.add('copied');
+              
+              // Reset button after 2 seconds
+              setTimeout(() => {
+                copyBtn.innerText = 'Copy';
+                copyBtn.classList.remove('copied');
+              }, 2000);
+            } catch (err) {
+              console.error('Failed to copy text: ', err);
+            }
+          });
+
+          // Assemble the DOM structure
+          header.appendChild(langSpan);
+          header.appendChild(copyBtn);
+          
+          wrapper.appendChild(header);
+          wrapper.appendChild(pre);
+        });
+      });
+    </script>
   </body>
 </html>

@@ -172,3 +172,89 @@ body {
   align-items: center;
   margin-bottom: 2rem;
 }
+
+/* --- Markdown Description Content --- */
+.description img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 6px; /* Matches the rounded corners of your UI */
+  display: block;
+  margin: 1rem auto; /* Centers the image if it is smaller than the container */
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1); /* Optional: adds a subtle depth */
+}
+
+/* --- Code Blocks --- */
+.code-wrapper {
+  margin: 1.5rem 0;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  background: #1e1e1e; /* Dark theme for the header */
+}
+
+.code-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.5rem 1rem;
+  background: #252526;
+  border-bottom: 1px solid #333;
+}
+
+.code-lang {
+  color: #9cdcfe;
+  font-size: 0.75rem;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.copy-btn {
+  background: transparent;
+  color: #a9a9a9;
+  border: 1px solid #555;
+  padding: 0.25rem 0.75rem;
+  border-radius: 4px;
+  font-size: 0.75rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.copy-btn:hover {
+  background: #333;
+  color: #fff;
+  border-color: #888;
+}
+
+.copy-btn.copied {
+  background: #2ea043;
+  color: #fff;
+  border-color: #2ea043;
+}
+
+.description pre {
+  background: #1e1e1e !important;
+  color: #d4d4d4;
+  padding: 1rem;
+  overflow-x: auto;
+  margin: 0;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-size: 0.9rem;
+  line-height: 1.5;
+}
+
+.description pre code {
+  background: transparent;
+  padding: 0;
+}
+
+/* Inline code styles (not blocks) */
+.description :not(pre) > code {
+  background: #eaeaea;
+  color: #d73a49;
+  padding: 0.2em 0.4em;
+  border-radius: 4px;
+  font-size: 0.85em;
+  font-family: ui-monospace, SFMono-Regular, Consolas, monospace;
+}
