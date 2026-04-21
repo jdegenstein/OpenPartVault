@@ -258,3 +258,74 @@ body {
   font-size: 0.85em;
   font-family: ui-monospace, SFMono-Regular, Consolas, monospace;
 }
+
+/* --- File Tree Table Layout --- */
+.file-tree-list, .tree-node { 
+  list-style: none !important; 
+  list-style-type: none !important; /* Force bullets off globally */
+  padding-left: 0; 
+  margin: 0; 
+}
+.file-tree-list .file-tree-list { 
+  margin-left: 1.5rem; 
+  border-left: 2px solid #eaecef; 
+  padding-left: 1rem; 
+}
+
+/* Hide the native disclosure triangle */
+details > summary { list-style: none; outline: none; }
+details > summary::-webkit-details-marker { display: none; }
+
+.folder-summary { 
+  cursor: pointer; 
+  font-weight: 600; 
+  padding: 0.8rem; 
+  border-radius: 6px; 
+  font-size: 1.25rem; /* Noticeably larger folder text */
+  display: flex; 
+  align-items: center; 
+  transition: background 0.2s; 
+}
+.folder-summary:hover { background: #f0f0f0; }
+.folder-name { margin-left: 0.6rem; }
+
+.file-row {
+  display: grid;
+  grid-template-columns: 1fr 120px auto; /* Enforces strict Table layout */
+  align-items: center;
+  padding: 0.8rem 1.2rem;
+  margin: 0.5rem 0;
+  border-radius: 6px;
+  background: #fff;
+  border: 1px solid #e1e4e8;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+}
+.file-row:hover { background: #f6f8fa; border-color: #d1d5da; }
+
+.file-name-col { 
+  display: flex; 
+  align-items: center; 
+  font-size: 1.15rem; /* Larger file text */
+  font-weight: 500; 
+}
+.file-name { margin-left: 0.6rem; }
+
+.file-size-col { 
+  color: #6a737d; 
+  font-size: 1.05rem; /* Larger size text */
+  font-family: ui-monospace, SFMono-Regular, monospace; 
+  text-align: center; 
+}
+
+.file-action-col { text-align: right; }
+
+.icon { font-size: 1.6rem; line-height: 1; } /* Larger icons */
+
+.download-btn.small { 
+  display: inline-flex; 
+  align-items: center; 
+  gap: 0.4rem; 
+  padding: 0.6rem 1.2rem; /* Much larger click target */
+  font-size: 1rem; 
+}
+.dl-icon { margin-bottom: -1px; }

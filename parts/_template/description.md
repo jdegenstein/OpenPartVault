@@ -6,5 +6,8 @@ Briefly describe what this part is and what it is used for.
 * **Supports:** None required
 * **Tolerances:** Designed for 0.2mm clearance
 
-## Source Files
+## Native CAD Files / Source Files
 Describe the parametric source files included (if any) and how to modify them.
+
+## Alternate Views
+![alt-text](alternate_view.png)
