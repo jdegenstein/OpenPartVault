@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" width="100%" height="100%">
+  <rect width="100%" height="100%" fill="#f4f5f7"/>
+  <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
+    <path d="M 40 0 L 0 0 0 40" fill="none" stroke="#e1e4e8" stroke-width="1"/>
+  </pattern>
+  <rect width="100%" height="100%" fill="url(#grid)"/>
+  <g transform="translate(368, 268)" stroke="#a3aab3" stroke-width="4" fill="none" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M32 8l-32 16v32l32 16 32-16V24L32 8z" />
+    <path d="M0 24l32 16 32-16" />
+    <path d="M32 40v32" />
+  </g>
+  <text x="50%" y="360" font-family="system-ui, sans-serif" font-size="18" fill="#a3aab3" text-anchor="middle" font-weight="600">No Thumbnail Provided</text>
+</svg>

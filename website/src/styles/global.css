@@ -329,3 +329,14 @@ details > summary::-webkit-details-marker { display: none; }
   font-size: 1rem; 
 }
 .dl-icon { margin-bottom: -1px; }
+
+/* --- Search Grid Image Formatting --- */
+.model-card img, .grid-img {
+  width: 100%;
+  height: auto !important;
+  aspect-ratio: 4 / 3; /* Enforces the 4:3 Aspect Ratio */
+  object-fit: cover;   /* Fills the 4:3 space perfectly without stretching the image */
+  display: block;
+  border-bottom: 1px solid #eee;
+  background-color: #f4f5f7; /* Matches the fallback SVG background */
+}

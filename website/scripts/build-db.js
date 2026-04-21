@@ -1,9 +1,10 @@
 // website/scripts/build-db.js
 import fs from 'fs';
 import path from 'path';
-import yaml from 'js-yaml'; // Reverted back to js-yaml
+import yaml from 'js-yaml';
 import { fileURLToPath } from 'url';
 import AdmZip from 'adm-zip';
+import sharp from 'sharp'; // <-- Image processing library
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -27,7 +28,8 @@ function getAllFiles(dirPath, arrayOfFiles = [], basePath = '') {
   return arrayOfFiles;
 }
 
-function buildDatabase() {
+// Converted to async to handle sharp processing
+async function buildDatabase() {
   const models = [];
 
   if (!fs.existsSync(repoPartsDir)) {
@@ -46,13 +48,12 @@ function buildDatabase() {
     
     if (!fs.statSync(folderPath).isDirectory() || folder === '_template') continue;
 
-    // Look for metadata.yaml (Reverted!)
     const metadataPath = path.join(folderPath, 'metadata.yaml');
     
     if (fs.existsSync(metadataPath)) {
       try {
         const fileContents = fs.readFileSync(metadataPath, 'utf8');
-        const data = yaml.load(fileContents); // Reverted back to YAML parsing
+        const data = yaml.load(fileContents);
         data.slug = folder;
         
         const destFolder = path.join(publicPartsDir, folder);
@@ -66,23 +67,35 @@ function buildDatabase() {
         const allFiles = getAllFiles(folderPath);
         data.files = [];
         data.stlFiles = [];
+        data.hasThumbnail = false; // Default state
+        let thumbnailSourcePath = null;
 
         for (const f of allFiles) {
           const destFile = path.join(destFolder, f.relativePath);
           fs.mkdirSync(path.dirname(destFile), { recursive: true });
           fs.copyFileSync(f.fullPath, destFile);
           
-          // Calculate formatted size for ALL files
           let sizeStr = f.size > 1024 * 1024 ? (f.size / (1024 * 1024)).toFixed(1) + ' MB' : (f.size / 1024).toFixed(0) + ' KB';
-          
-          // Push an object containing both name and size
           data.files.push({ name: f.relativePath, size: sizeStr });
           
           if (f.relativePath.toLowerCase().endsWith('.stl')) {
             data.stlFiles.push({ name: f.relativePath, size: sizeStr });
           }
           
-          if (f.relativePath.toLowerCase() === 'thumbnail.png') data.hasThumbnail = true;
+          // Regex checks the root level for any common image format
+          if (/^thumbnail\.(png|jpg|jpeg|webp)$/i.test(f.relativePath)) {
+            data.hasThumbnail = true;
+            thumbnailSourcePath = f.fullPath;
+          }
+        }
+
+        // Generate the optimized 600px WEBP specifically for the grid
+        if (thumbnailSourcePath) {
+          const destGridFile = path.join(destFolder, 'thumbnail_grid.webp');
+          await sharp(thumbnailSourcePath)
+            .resize({ width: 600 })
+            .webp({ quality: 80 })
+            .toFile(destGridFile);
         }
 
         data.stlFiles.sort((a, b) => a.name.localeCompare(b.name));
