@@ -1,6 +1,10 @@
 ---
 import Search from '../components/Search.astro';
 import '../styles/global.css';
+
+// 1. Define the dynamic repository path with a fallback
+const repoPath = import.meta.env.PUBLIC_GITHUB_REPO || "jdegenstein/OpenPartVault";
+const githubUrl = `https://github.com/${repoPath}`;
 ---
 <html lang="en">
   <head>
@@ -15,7 +19,7 @@ import '../styles/global.css';
           <h1 style="margin-bottom: 0.5rem;">📦 OpenPartVault</h1>
           <p style="margin: 0; color: var(--text-muted);">A collaborative, git-backed library for CAD models and source files.</p>
         </div>
-        <a href="https://github.com/jdegenstein/OpenPartVault" target="_blank" rel="noopener noreferrer" class="github-link">
+        <a href={githubUrl} target="_blank" rel="noopener noreferrer" class="github-link">
           View on GitHub
         </a>
       </div>
