@@ -37,6 +37,11 @@ export async function getStaticPaths() {
 const { model, descriptionHtml } = Astro.props;
 const baseUrl = import.meta.env.BASE_URL === '/' ? '' : import.meta.env.BASE_URL;
 
+// 1. Define the repository path
+const repoPath = import.meta.env.PUBLIC_GITHUB_REPO || "jdegenstein/OpenPartVault";
+// 2. Build the folder URL utilizing the model.slug from your props
+const githubFolderUrl = `https://github.com/${repoPath}/tree/main/parts/${model.slug}`;
+
 // Build the hierarchical file tree
 const fileTree = {};
 model.files.forEach(f => {
@@ -137,7 +142,7 @@ const fileTreeHtml = renderTree(fileTree);
     <div class="container">
       <div class="header-row" style="margin-bottom: 1rem;">
         <a href={`${baseUrl}/`}>&larr; Back to Vault</a>
-        <a href={`https://github.com/jdegenstein/OpenPartVault/tree/main/parts/${model.slug}`} target="_blank" rel="noopener noreferrer" class="github-link">
+        <a href={githubFolderUrl} target="_blank" rel="noopener noreferrer" class="github-link">
           View Folder on GitHub
         </a>
       </div>
